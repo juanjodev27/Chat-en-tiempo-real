@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat En Tiempo Real</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #chat-container {
+            width: 360px;
+            max-height: 500px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mensaje {
+            max-width: 80%;
+            margin: 8px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            clear: both;
+            display: inline-block;
+            word-wrap: break-word;
+        }
+
+        .mio {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .otro {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        #formulario {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 360px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #0b93f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007ad9;
+        }
+    </style>
+</head>
+<body>
+<h1>Chat WebSocket</h1>
+
+<div id="chat-container" id="chat"></div>
+
+<div id="formulario">
+    <input id="usuario" placeholder="Tu nombre"/>
+    <input id="contenido" placeholder="Mensaje"/>
+    <button onclick="sendMessage()">Enviar</button>
+</div>
+
+<script>
+    const ws = new WebSocket("ws://localhost:8080/chat");
+
+    const chat = document.getElementById("chat-container");
+
+    let miNombre = "";
+
+    ws.onmessage = function(event) {
+        const msg = JSON.parse(event.data);
+        const burbuja = document.createElement("div");
+        const esMio = msg.usuario === miNombre;
+
+        burbuja.classList.add("mensaje");
+        burbuja.classList.add(esMio ? "mio" : "otro");
+
+        burbuja.textContent = msg.usuario + ": " + msg.contenido;
+        chat.appendChild(burbuja);
+        chat.scrollTop = chat.scrollHeight;
+    };
+
+    function sendMessage() {
+        const usuarioInput = document.getElementById("usuario");
+        const contenidoInput = document.getElementById("contenido");
+
+        const user = usuarioInput.value.trim();
+        const content = contenidoInput.value.trim();
+
+        if (!user || !content) return;
+
+        miNombre = user;
+
+        ws.send(JSON.stringify({ usuario: user, contenido: content }));
+        contenidoInput.value = "";
+    }
+</script>
+</body>
+</html>
