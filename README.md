@@ -28,24 +28,6 @@ utilizando **WebSocket** para la comunicación en tiempo real entre los usuarios
 
 ---
 
-# Estructura del proyecto
-
-chat-con-websocket/
-├── src/
-│   └── main/
-│       ├── java/com/example/chat/
-│       │   ├── websocket/
-│       │   │   ├── config/WebsocketConfig.java
-│       │   │   ├── controller/ChatController.java
-│       │   │   └── entity/ChatMensaje.java
-│       │   └── ChatConWebsocketApplication.java
-│       └── resources/
-│           └── static/
-│               └── index.html
-├── pom.xml
-└── README.md
----
-
 # Cómo ejecutar el proyecto
 
  # 1. Clona el repositorio
