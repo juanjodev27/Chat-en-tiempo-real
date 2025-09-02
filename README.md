@@ -33,7 +33,7 @@ utilizando **WebSocket** para la comunicación en tiempo real entre los usuarios
  # 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/juanjodev27/chat-con-websocket.git
+git clone https://github.com/juanjodev27/chat-en-tiempo-real.git
 cd chat-con-websocket
 
 # 2. Abre el proyecto en tu IDE favorito (Eclipse, IntelliJ, VS Code)
@@ -63,6 +63,7 @@ Si deseas ponerte en contacto conmigo o ver más de mis proyectos:
 
 GitHub: github.com/juanjodev27
 
-Email: juanjogarcete94@gmail.com
+Email: juanjosegarcete9@gmail.com
+
 
 
