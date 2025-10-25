@@ -1,6 +1,14 @@
 package com.example.chat.websocket.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "mensajes")
 public class ChatMensaje {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String usuario;
     private String contenido;

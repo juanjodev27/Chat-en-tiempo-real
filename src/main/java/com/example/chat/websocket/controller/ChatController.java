@@ -1,7 +1,9 @@
 package com.example.chat.websocket.controller;
 
 import com.example.chat.websocket.entity.ChatMensaje;
+import com.example.chat.websocket.repository.ChatRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -15,6 +17,9 @@ public class ChatController extends TextWebSocketHandler {
     private final Set<WebSocketSession> sesiones = new HashSet<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
+    @Autowired
+    private ChatRepository chatRepository;
+
     @Override
     public void afterConnectionEstablished(WebSocketSession sesion){
         sesiones.add(sesion);
@@ -24,6 +29,8 @@ public class ChatController extends TextWebSocketHandler {
     @Override
     public  void handleTextMessage(WebSocketSession session, TextMessage mensaje) throws Exception{
         ChatMensaje chatMensaje = mapper.readValue(mensaje.getPayload(),ChatMensaje.class);
+
+        chatRepository.save(chatMensaje);
 
         for(WebSocketSession s: sesiones){
             if (s.isOpen()){
