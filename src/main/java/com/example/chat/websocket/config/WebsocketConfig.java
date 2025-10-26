@@ -23,8 +23,8 @@ public class WebsocketConfig implements WebSocketConfigurer {
                 .setAllowedOrigins("*");
     }
 
-    @Bean
     public ChatController chatController(){
+
         return new ChatController();
     }
 }
